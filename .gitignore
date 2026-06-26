@@ -1,5 +1,29 @@
-*.zip
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment (Matches your /venv folder)
+venv/
+.venv/
+
+# Environments / Secrets (Matches your .env)
 .env
-*.txt
+.env.local
+.env.*
+
+# Database (Matches your db. file, works perfectly for SQLite)
+*.sqlite3
+db.sqlite3
 db.
-/venv
+db.py
+
+# Compressed archives
+*.zip
+*.tar.gz
+*.rar
+
+# Text files (Be careful: this ignores ALL text files, e.g., requirements.txt)
+# If you want to allow requirements.txt but ignore other txt files, use the rule below:
+*.txt
+!requirements.txt
