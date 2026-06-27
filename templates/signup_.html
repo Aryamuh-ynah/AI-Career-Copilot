@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Sign Up</title>
+	<style>
+		body{font-family:Arial,Helvetica,sans-serif;background:#f5f7fb;margin:0;padding:0;}
+		.container{max-width:420px;margin:60px auto;background:#fff;padding:24px;border-radius:8px;box-shadow:0 6px 18px rgba(20,30,50,0.08)}
+		h1{margin:0 0 12px;font-size:22px}
+		label{display:block;margin-top:12px;font-size:14px}
+		input[type=text],input[type=email],input[type=password]{width:100%;padding:10px;margin-top:6px;border:1px solid #d6dbe8;border-radius:4px}
+		.btn{display:inline-block;margin-top:18px;padding:10px 16px;background:#2563eb;color:#fff;border:none;border-radius:6px;cursor:pointer}
+		.errors{background:#fff4f4;border:1px solid #ffd2d2;color:#9b1c1c;padding:10px;border-radius:4px}
+		.help{font-size:13px;color:#6b7280;margin-top:8px}
+		.footer{font-size:13px;color:#6b7280;margin-top:14px}
+	</style>
+</head>
+<body>
+
+
+	<div class="auth-container">
+		<h1>Create an account</h1>
+
+		{% if form.non_field_errors %}
+		<div class="errors">
+			{{ form.non_field_errors }}
+		</div>
+		{% endif %}
+
+		<form method="POST" novalidate>
+			{% csrf_token %}
+
+			<label for="id_username">Username</label>
+			{{ form.username }}
+			{% if form.username.errors %}
+				<div class="errors">{{ form.username.errors }}</div>
+			{% endif %}
+
+			<label for="id_email">Email</label>
+			{{ form.email }}
+			{% if form.email.errors %}
+				<div class="errors">{{ form.email.errors }}</div>
+			{% endif %}
+
+			<label for="id_password1">Password</label>
+			{{ form.password1 }}
+			{% if form.password1.errors %}
+				<div class="errors">{{ form.password1.errors }}</div>
+			{% endif %}
+
+			<label for="id_password2">Confirm Password</label>
+			{{ form.password2 }}
+			{% if form.password2.errors %}
+				<div class="errors">{{ form.password2.errors }}</div>
+			{% endif %}
+
+			<button type="submit" class="btn">Sign Up</button>
+		</form>
+
+		<div class="footer">Already have an account? <a href="{% url 'login' %}">Log in</a></div>
+	</div>
+</body>
+</html>
