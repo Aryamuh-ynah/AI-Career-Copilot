@@ -5,7 +5,7 @@ class User(Base):
     __tablename__ = "users"
     
     id = Column(Integer, primary_key=True)
-    emal = Column(String(100), unique=True)
+    emall = Column(String(100), unique=True)
     password = Column(String(100))
     
 class Reports(Base):
