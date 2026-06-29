@@ -1,60 +1,68 @@
 {% extends "base.html" %} {% block content %}
 
-<h2>Welcome, {{user}}</h2>
+<h2>Welcome, {{ user }}</h2>
 
 <div class="card">
-  <h3>Resume Analyser</h3>
-  <form action="">
+  <h3>Resume Analyzer</h3>
+
+  <form method="POST" enctype="multipart/form-data">
+    <label for="resume">Paste your resume</label>
     <textarea
+      id="resume"
       name="resume"
-      placeholder="Paste your resume(optional)"
+      placeholder="Paste your resume here, or upload a file below"
+      rows="10"
     ></textarea>
-    <p>OR upload file:</p>
-    <input type="file" name="file" />
+
+    <p>OR upload PDF/DOCX:</p>
+
+    <input type="file" name="file" accept=".pdf,.docx" />
+
+    <label for="role">Target Role</label>
     <input
+      id="role"
       type="text"
       name="role"
-      placeholder=" What do you want to become?"
+      placeholder="Example: Backend Developer, Odoo Developer, Data Analyst"
       required
     />
+
     <button type="submit">Analyze</button>
   </form>
 </div>
+
 {% if result %}
-<div class="red">
+<div class="card">
   {% if result.error %}
-  <p style="color: red">Error: {{result.error}}</p>
+  <p style="color: red">Error: {{ result.error }}</p>
   {% endif %}
 
   <h3>Skills</h3>
   <ul>
-    {% for s in result.get("skills",[])%}
-
-    <li>{{s}}</li>
+    {% for skill in result.get("skills", []) %}
+    <li>{{ skill }}</li>
     {% endfor %}
   </ul>
+
   <h3>Missing Skills</h3>
   <ul>
-    {% for s in result.get("miss_skills",[])%}
-
-    <li>{{s}}</li>
+    {% for skill in result.get("missing_skills", []) %}
+    <li>{{ skill }}</li>
     {% endfor %}
   </ul>
+
   <h3>Roadmap</h3>
   <ul>
-    {% for s in result.get("roadmap",[])%}
-
-    <li>{{s}}</li>
+    {% for step in result.get("roadmap", []) %}
+    <li>{{ step }}</li>
     {% endfor %}
   </ul>
-  <h3>Inteview Questions</h3>
-  <ul>
-    {% for s in result.get("in_q",[])%}
 
-    <li>{{s}}</li>
+  <h3>Interview Questions</h3>
+  <ul>
+    {% for question in result.get("interview_questions", []) %}
+    <li>{{ question }}</li>
     {% endfor %}
   </ul>
 </div>
 {% endif %} {% endblock %}
-
-<!-- <a href="https://youtu.be/MBGhJFTULBo?si=DLSjbXsbwe4N959U">Video Link</a> -->
