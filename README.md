@@ -74,7 +74,7 @@ source venv/bin/activate
 Initialize your application server requirements framework (make sure Flask is installed in your workspace).
 
 ```bash
-pip install flask sqlalchemy openai PyPDF2 python-docs pymsql docx
+pip install flask sqlalchemy openai PyPDF2 python-docs pymysql docx
 
 ```
 
