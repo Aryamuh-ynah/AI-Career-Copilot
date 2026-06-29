@@ -160,7 +160,8 @@ def dashboard():
                 flash("Please paste your resume or upload a PDF/DOCX file.", "error")
                 return redirect(url_for("dashboard"))
 
-            result = analyze_resume(resume_text, user_goal)
+            provider = request.form.get("provider", "mock")
+            result = analyze_resume(resume_text, user_goal, provider)
 
             db = SessionLocal()
 
