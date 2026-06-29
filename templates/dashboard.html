@@ -26,6 +26,13 @@
       placeholder="Example: Backend Developer, Odoo Developer, Data Analyst"
       required
     />
+    <label for="provider">AI Provider</label>
+
+    <select id="provider" name="provider">
+      <option value="mock">Mock / Free Test Mode</option>
+      <option value="openai">OpenAI</option>
+      <option value="gemini">Gemini</option>
+    </select>
 
     <button type="submit">Analyze</button>
   </form>
@@ -35,6 +42,8 @@
 <div class="card">
   {% if result.error %}
   <p style="color: red">Error: {{ result.error }}</p>
+  {% endif %} {% if result %}
+  <p><strong>Provider:</strong> {{ result.get("provider", "unknown") }}</p>
   {% endif %}
 
   <h3>Skills</h3>
