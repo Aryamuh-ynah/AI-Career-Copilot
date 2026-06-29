@@ -1,26 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>AI Career Copilot</title>
-    
-    <link rel="stylesheet" href="style.css">
-<head>
-<body>
-    <header>
-        <div class="container">
-            <nav>
-                <a href ="/history"> History<a/>
-                <a href ="/dashboard">Dashboard</a>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>AI Career Copilot</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
 
-                <a href ="/logout">Logout</a>
-            </nav>
-        </div>
+  <body>
+    <header>
+      <div class="container">
+        <h1>AI Career Copilot</h1>
+
+        {% if session.get("user_id") %}
+        <nav>
+          <a href="{{ url_for('dashboard') }}">Dashboard</a>
+          <a href="{{ url_for('history') }}">History</a>
+          <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+        {% endif %}
+      </div>
     </header>
-    <main class="conteiner">
-        {% block container %}{% endblock %}
+
+    <main class="container">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <p class="flash {{ category }}">{{ message }}</p>
+      {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
     </main>
-    <footer>&copy All right resarved</footer>
-<body>
-<html>
+
+    <footer>&copy; AI Career Copilot. All rights reserved.</footer>
+  </body>
+</html>
