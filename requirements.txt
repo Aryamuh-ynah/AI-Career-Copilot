@@ -1,0 +1,9 @@
+Flask
+SQLAlchemy
+python-dotenv
+openai
+PyPDF2
+python-docx
+Werkzeug
+pydantic
+pytest
