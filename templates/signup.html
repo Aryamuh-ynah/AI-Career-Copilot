@@ -1,23 +1,18 @@
-{% extends "base.html" %}
-{% block  content %}
+{% extends "base.html" %} {% block content %}
 
 <div class="auth-container">
-    <div class="auth-card">
-        <h2>Create Account</h2>
-        <p class="sub-text">
-            Start your AT Career Journey
-        </p>
-        <form action="POST">
-            <input type="email" name="email" placeholder="Enter your email">
-            <input type="password" name="password" placeholder="Create a password">
-            <button type="submit"> Sign Up           </button>
-
-        
-        </form>
-        <p class="switch-auth">
-            Already have an account? <a href="/login">LogIn</a>
-        </p>
-    </div>
+  <div class="auth-card">
+    <h2>Create Account</h2>
+    <p class="sub-text">Start your AT Career Journey</p>
+    <form action="POST">
+      <input type="email" name="email" placeholder="Enter your email" />
+      <input type="password" name="password" placeholder="Create a password" />
+      <button type="submit">Sign Up</button>
+    </form>
+    <p class="switch-auth">
+      Already have an account? <a href="/login">LogIn</a>
+    </p>
+  </div>
 </div>
 
 {% endblock %}
