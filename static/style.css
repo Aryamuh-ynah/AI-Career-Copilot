@@ -1,0 +1,90 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f7fb;
+  color: #1f2937;
+}
+
+.container {
+  width: min(1000px, 92%);
+  margin: 0 auto;
+}
+
+header {
+  background: #111827;
+  color: white;
+  padding: 16px 0;
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav a {
+  color: white;
+  margin-left: 16px;
+  text-decoration: none;
+}
+
+.card,
+.auth-card {
+  background: white;
+  margin-top: 24px;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.auth-container {
+  max-width: 420px;
+  margin: 48px auto;
+}
+
+input,
+textarea,
+button {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 10px;
+  margin-bottom: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+}
+
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+.flash {
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 16px;
+}
+
+.flash.error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.flash.success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+footer {
+  margin-top: 48px;
+  padding: 24px;
+  text-align: center;
+  color: #6b7280;
+}
