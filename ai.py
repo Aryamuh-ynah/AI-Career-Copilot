@@ -17,7 +17,7 @@ class ResumeAnalysis(BaseModel):
 
 
 
-def analyze_resume(resume_text: str, user_goal: str) -> dict:
+def build_prompt(resume_text: str, user_goal: str) -> dict:
     prompt = f"""
 You are an elite Senior Hiring Manager and Executive Talent Scout. Your task is to act as an AI Career Copilot, critically evaluating a candidate's resume against their specific target career goal. You do not give generic encouragement; you provide ruthless, realistic, and actionable gap analysis.
 
@@ -54,48 +54,16 @@ Resume:
 
 """
 
-
-def mock_analyze_resume(resume_text: str, user_goal: str) -> dict:
-    return {
-        "skills": [
-            "Python",
-            "Flask",
-            "Basic web development",
-            "Database fundamentals",
-        ],
-        "missing_skills": [
-            f"Advanced skills for {user_goal}",
-            "Testing",
-            "Deployment",
-            "Security best practices",
-        ],
-        "roadmap": [
-            "Fix app startup and database issues",
-            "Add proper authentication",
-            "Improve resume upload handling",
-            "Add tests",
-            "Deploy with environment variables",
-        ],
-        "interview_questions": [
-            "Explain how Flask routes work.",
-            "How do you securely store passwords?",
-            "How would you handle file uploads safely?",
-            "How would you design resume analysis history?",
-        ],
-        "provider": "mock",
-    }
-
-
-
 def analyze_with_openai(resume_text: str, user_goal: str) -> dict:
     api_key = os.getenv("OPENAI_API_KEY")
 
     if not api_key:
-        return mock_analyze_resume(resume_text, user_goal)
+        raise ValueError("OPENAI_API_KEY is missing from environment variables.")
+
+    from openai import OpenAI
 
     client = OpenAI(api_key=api_key)
     model = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
-    prompt = build_prompt(resume_text, user_goal)
 
     completion = client.chat.completions.parse(
         model=model,
@@ -107,7 +75,7 @@ def analyze_with_openai(resume_text: str, user_goal: str) -> dict:
             },
             {
                 "role": "user",
-                "content": prompt,
+                "content": build_prompt(resume_text, user_goal),
             },
         ],
         response_format=ResumeAnalysis,
@@ -118,27 +86,24 @@ def analyze_with_openai(resume_text: str, user_goal: str) -> dict:
     if parsed is None:
         raise ValueError("OpenAI response could not be parsed.")
 
-    result = parsed.model_dump()
-    result["provider"] = "openai"
-    return result
+    return parsed.model_dump()
 
 
 def analyze_with_gemini(resume_text: str, user_goal: str) -> dict:
     api_key = os.getenv("GEMINI_API_KEY")
 
     if not api_key:
-        return mock_analyze_resume(resume_text, user_goal)
+        raise ValueError("GEMINI_API_KEY is missing from environment variables.")
 
     from google import genai
     from google.genai import types
 
     client = genai.Client(api_key=api_key)
     model = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
-    prompt = build_prompt(resume_text, user_goal)
 
     response = client.models.generate_content(
         model=model,
-        contents=prompt,
+        contents=build_prompt(resume_text, user_goal),
         config=types.GenerateContentConfig(
             temperature=0.3,
             response_mime_type="application/json",
@@ -146,29 +111,26 @@ def analyze_with_gemini(resume_text: str, user_goal: str) -> dict:
         ),
     )
 
+    if not response.text:
+        raise ValueError("Gemini returned an empty response.")
+
     data = json.loads(response.text)
-
-    result = ResumeAnalysis(**data).model_dump()
-    result["provider"] = "gemini"
-    return result
+    return ResumeAnalysis(**data).model_dump()
 
 
-def analyze_resume(
-    resume_text: str,
-    user_goal: str,
-    provider: str | None = None,
-) -> dict:
-    selected_provider = provider or os.getenv("AI_PROVIDER", "mock")
-    selected_provider = selected_provider.lower().strip()
+def analyze_resume(resume_text: str, user_goal: str) -> dict:
+    provider = os.getenv("AI_PROVIDER", "gemini").lower().strip()
 
     try:
-        if selected_provider == "openai":
+        if provider == "openai":
             return analyze_with_openai(resume_text, user_goal)
 
-        if selected_provider == "gemini":
+        if provider == "gemini":
             return analyze_with_gemini(resume_text, user_goal)
 
-        return mock_analyze_resume(resume_text, user_goal)
+        raise ValueError(
+            f"Unsupported AI_PROVIDER '{provider}'. Use 'gemini' or 'openai'."
+        )
 
     except Exception as e:
         return {
@@ -176,6 +138,5 @@ def analyze_resume(
             "missing_skills": [],
             "roadmap": [],
             "interview_questions": [],
-            "provider": selected_provider,
             "error": str(e),
         }
