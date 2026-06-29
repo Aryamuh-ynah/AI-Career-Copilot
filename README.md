@@ -78,6 +78,29 @@ pip install flask sqlalchemy openai PyPDF2 python-docs pymysql docx
 
 ```
 
+## AI Provider Configuration
+
+This project supports Gemini and OpenAI.
+
+The AI provider is configured by the developer using environment variables. End users cannot choose the provider from the UI.
+
+Duplicate a `.env` file from `.env.example`:
+
+````env
+AI_PROVIDER=gemini
+GEMINI_API_KEY=your-gemini-api-key
+GEMINI_MODEL=gemini-2.5-flash
+
+Or use OpenAI:
+
+AI_PROVIDER=openai
+OPENAI_API_KEY=your-openai-api-key
+OPENAI_MODEL=gpt-4.1-mini
+
+Supported values for AI_PROVIDER:
+-gemini
+-openai
+
 ### 4. Initialize Database & Run the Project
 
 Launch your backend web server pipeline tracking:
@@ -85,7 +108,7 @@ Launch your backend web server pipeline tracking:
 ```bash
 python app.py
 
-```
+````
 
 Once initialized, visit your local server deployment address in your web browser: `http://127.0.0.1:5000/`
 
