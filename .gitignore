@@ -10,7 +10,7 @@ venv/
 # Environments / Secrets (Matches your .env)
 .env
 .env.local
-.env.*
+
 
 # Database (Matches your db. file, works perfectly for SQLite)
 *.sqlite3
