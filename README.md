@@ -54,28 +54,27 @@ cd AI-Career-Copilot
 
 Ensure your configurations are set properly within your local environment wrapper before initializing dependencies.
 
-* **On Windows (PowerShell):**
+- **On Windows (PowerShell):**
+
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 .\venv\Scripts\Activate.ps1
 
 ```
 
+- **On Linux / Ubuntu:**
 
-* **On Linux / Ubuntu:**
 ```bash
 source venv/bin/activate
 
 ```
-
-
 
 ### 3. Install Required Dependencies
 
 Initialize your application server requirements framework (make sure Flask is installed in your workspace).
 
 ```bash
-pip install flask sqlalchemy openai PuPDF2 python-docs pymsql
+pip install flask sqlalchemy openai PyPDF2 python-docs pymsql docx
 
 ```
 
@@ -94,6 +93,6 @@ Once initialized, visit your local server deployment address in your web browser
 
 ## 📌 Development Features Built From This Course
 
-* **User Authentication:** Fully structured `login.html` and `signup.html` modules rendering through Jinja templates routing.
-* **Persistent Data Tracking:** Structural models mapped natively utilizing Python hooks to persist profile and interaction states.
-* **Base Extension Templates:** Component management patterns matching modular architecture styles to prevent duplicate code configurations.
+- **User Authentication:** Fully structured `login.html` and `signup.html` modules rendering through Jinja templates routing.
+- **Persistent Data Tracking:** Structural models mapped natively utilizing Python hooks to persist profile and interaction states.
+- **Base Extension Templates:** Component management patterns matching modular architecture styles to prevent duplicate code configurations.
