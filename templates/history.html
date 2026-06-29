@@ -1,42 +1,50 @@
 {% extends "base.html" %} {% block content %}
 
-<h2>Your History</h2>
-{% for r in reports %}
+<h2>Your Analysis History</h2>
+
+{% if not report_items %}
+<p>No analysis history yet.</p>
+{% endif %} {% for item in report_items %}
 <div class="card">
+  <p><strong>Goal:</strong> {{ item.report.goal }}</p>
+
   <p>
-    <strong>Resume Preview: </strong>
+    <strong>Date:</strong> {{ item.report.created_at.strftime("%Y-%m-%d %H:%M")
+    }}
   </p>
-  <p>{{r.resume[:150]}}</p>
-  <br />
+
+  <p>
+    <strong>Resume Preview:</strong>
+  </p>
+
+  <p>{{ item.report.resume_text[:250] }}...</p>
 
   <h3>Skills</h3>
   <ul>
-    {% for s in result.get("skills",[])%}
-
-    <li>{{s}}</li>
+    {% for skill in item.result.get("skills", []) %}
+    <li>{{ skill }}</li>
     {% endfor %}
   </ul>
+
   <h3>Missing Skills</h3>
   <ul>
-    {% for s in result.get("miss_skills",[])%}
-
-    <li>{{s}}</li>
+    {% for skill in item.result.get("missing_skills", []) %}
+    <li>{{ skill }}</li>
     {% endfor %}
   </ul>
+
   <h3>Roadmap</h3>
   <ul>
-    {% for s in result.get("roadmap",[])%}
-
-    <li>{{s}}</li>
+    {% for step in item.result.get("roadmap", []) %}
+    <li>{{ step }}</li>
     {% endfor %}
   </ul>
-  <h3>Inteview Questions</h3>
-  <ul>
-    {% for s in result.get("in_q",[])%}
 
-    <li>{{s}}</li>
+  <h3>Interview Questions</h3>
+  <ul>
+    {% for question in item.result.get("interview_questions", []) %}
+    <li>{{ question }}</li>
     {% endfor %}
   </ul>
 </div>
-
-{% endblock %}
+{% endfor %} {% endblock %}
